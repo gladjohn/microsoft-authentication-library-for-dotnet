@@ -1,0 +1,73 @@
+# MSI v2 log triage signature rules
+# Each entry under `stages` defines a pipeline stage with matching patterns.
+# Patterns are applied as case-insensitive regular expressions against log lines.
+
+stages:
+  mi_v2_flow:
+    label: "MI v2 Flow"
+    description: "General MSI v2 flow detection markers"
+    severity: "info"
+    patterns:
+      - "ManagedIdentityV2"
+      - "MiV2"
+      - "MI V2"
+      - "mi-v2"
+      - "MIv2"
+      - "managed.identity.v2"
+
+  cert_cache:
+    label: "Certificate Cache"
+    description: "Managed identity certificate not found in local cache or cache operation failure"
+    severity: "warning"
+    patterns:
+      - "CertificateCache"
+      - "certificate.*not found"
+      - "no certificate"
+      - "cert.*cache.*miss"
+      - "GetCertificate"
+      - "certificate.*expired"
+
+  mtls_schannel:
+    label: "mTLS / SCHANNEL"
+    description: "Mutual TLS handshake or Windows SCHANNEL SSL/TLS failure"
+    severity: "error"
+    patterns:
+      - "SCHANNEL"
+      - "mTLS"
+      - "SEC_E_"
+      - "0x8009"
+      - "CryptAcquireCertificatePrivateKey"
+      - "NTE_BAD_KEY"
+      - "mutual.tls"
+
+  imds:
+    label: "IMDS"
+    description: "Instance Metadata Service unreachable or returned an error"
+    severity: "error"
+    patterns:
+      - "169\\.254\\.169\\.254"
+      - "IMDS"
+      - "metadata/identity"
+      - "Connection refused"
+      - "unable to.*connect.*169"
+
+  attestation:
+    label: "Attestation"
+    description: "VM attestation service failure"
+    severity: "error"
+    patterns:
+      - "AttestationService"
+      - "VmAttestation"
+      - "attest.*fail"
+      - "Attest.*error"
+
+  token_cache:
+    label: "Token Cache"
+    description: "Token cache hit or miss during MSI v2 token acquisition"
+    severity: "info"
+    patterns:
+      - "CacheHit"
+      - "CacheMiss"
+      - "TokenCache"
+      - "cache.*hit"
+      - "cache.*miss"

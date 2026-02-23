@@ -1,0 +1,8 @@
+[2023-10-15 16:00:00Z] [Info] [correlationId: imds001-xyz] MSAL .NET 4.57.0 with assembly id MSAL.Desktop
+[2023-10-15 16:00:01Z] [Info] [correlationId: imds001-xyz] ManagedIdentityV2 token acquisition started
+[2023-10-15 16:00:01Z] [Verbose] [correlationId: imds001-xyz] Checking certificate cache for managed identity certificate
+[2023-10-15 16:00:01Z] [Info] [correlationId: imds001-xyz] CertificateCache: Certificate found, proceeding
+[2023-10-15 16:00:01Z] [Info] [correlationId: imds001-xyz] Attempting to contact IMDS endpoint: http://169.254.169.254/metadata/identity/oauth2/token
+[2023-10-15 16:00:06Z] [Error] [correlationId: imds001-xyz] IMDS request timed out after 5000ms
+[2023-10-15 16:00:06Z] [Error] [correlationId: imds001-xyz] Connection refused when connecting to IMDS at 169.254.169.254
+[2023-10-15 16:00:06Z] [Error] [correlationId: imds001-xyz] ManagedIdentityV2: Token acquisition failed at IMDS stage

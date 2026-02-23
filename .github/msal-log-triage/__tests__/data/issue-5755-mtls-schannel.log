@@ -1,0 +1,11 @@
+[2023-10-15 14:23:00Z] [Info] [correlationId: abc123-def456] MSAL .NET 4.57.0 with assembly id MSAL.Desktop
+[2023-10-15 14:23:00Z] [Info] [correlationId: abc123-def456] IsConfidentialClient: False
+[2023-10-15 14:23:01Z] [Info] [correlationId: abc123-def456] ManagedIdentityV2 token acquisition started
+[2023-10-15 14:23:01Z] [Verbose] [correlationId: abc123-def456] Checking certificate cache for managed identity certificate
+[2023-10-15 14:23:01Z] [Info] [correlationId: abc123-def456] CertificateCache: Certificate found, thumbprint=A1B2C3D4E5F6, expiry=2024-10-15
+[2023-10-15 14:23:01Z] [Info] [correlationId: abc123-def456] Certificate found in cache, proceeding with mTLS handshake
+[2023-10-15 14:23:02Z] [Warning] [correlationId: abc123-def456] mTLS handshake attempt 1 of 3
+[2023-10-15 14:23:02Z] [Error] [correlationId: abc123-def456] SCHANNEL: SEC_E_INTERNAL_ERROR (0x80090304) - The Local Security Authority cannot be contacted
+[2023-10-15 14:23:02Z] [Error] [correlationId: abc123-def456] mTLS handshake failed with SCHANNEL error code 0x80090304
+[2023-10-15 14:23:02Z] [Error] [correlationId: abc123-def456] ManagedIdentityV2: Failed to acquire token. Stage: mTLS. SCHANNEL returned SEC_E_INTERNAL_ERROR
+[2023-10-15 14:23:02Z] [Error] [correlationId: abc123-def456] Exception: System.ComponentModel.Win32Exception (0x80090304): The client and server cannot communicate because they do not possess a common algorithm

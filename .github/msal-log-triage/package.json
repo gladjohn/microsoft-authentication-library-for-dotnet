@@ -1,0 +1,23 @@
+{
+  "name": "msal-log-triage",
+  "version": "1.0.0",
+  "description": "Automated MSI v2 log triage for MSAL.NET GitHub issues",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "keywords": [
+    "msal",
+    "managed-identity",
+    "log-triage",
+    "github-actions"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

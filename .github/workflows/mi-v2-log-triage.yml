@@ -1,0 +1,119 @@
+name: MSI v2 Log Triage
+
+# Triggered whenever an issue is opened, edited, or has a new label applied.
+# A gating condition in the job ensures the workflow only does real work for
+# issues that appear to contain MSI v2 / Managed Identity v2 content.
+
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  triage:
+    name: Triage MSI v2 logs
+    runs-on: ubuntu-latest
+
+    # Only proceed when the issue is plausibly related to MSI v2.
+    # The body check covers issues that paste raw log lines without a label.
+    if: |
+      contains(github.event.issue.labels.*.name, 'scenario:ManagedIdentity') ||
+      contains(github.event.issue.body, 'ManagedIdentityV2') ||
+      contains(github.event.issue.body, 'MiV2') ||
+      contains(github.event.issue.body, 'MI V2') ||
+      contains(github.event.issue.body, 'mi-v2') ||
+      contains(github.event.issue.body, 'MIv2')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: .github/msal-log-triage/package-lock.json
+
+      - name: Install analyzer dependencies
+        run: npm ci
+        working-directory: .github/msal-log-triage
+
+      - name: Analyse logs and post triage comment
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const path = require('path');
+            const analyzerPath = path.join(
+              process.env.GITHUB_WORKSPACE,
+              '.github',
+              'msal-log-triage',
+              'index.js'
+            );
+            const { analyze } = require(analyzerPath);
+
+            const issueBody = context.payload.issue.body || '';
+            const result = analyze(issueBody);
+
+            if (!result.isMiV2) {
+              core.info('Issue does not appear to be MSI v2 — skipping triage.');
+              return;
+            }
+
+            core.info(`Detected ${result.stages.length} pipeline stage(s).`);
+
+            // ----------------------------------------------------------------
+            // Post or update the triage comment
+            // ----------------------------------------------------------------
+            if (result.comment) {
+              const MARKER = '<!-- msal-log-triage-bot -->';
+
+              const { data: existingComments } = await github.rest.issues.listComments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+              });
+
+              const existing = existingComments.find(
+                c => c.body && c.body.includes(MARKER)
+              );
+
+              if (existing) {
+                await github.rest.issues.updateComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: existing.id,
+                  body: result.comment,
+                });
+                core.info(`Updated existing triage comment (ID: ${existing.id}).`);
+              } else {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  body: result.comment,
+                });
+                core.info('Created new triage comment.');
+              }
+            }
+
+            // ----------------------------------------------------------------
+            // Apply triage labels (best-effort — ignore if label doesn't exist)
+            // ----------------------------------------------------------------
+            if (result.labels && result.labels.length > 0) {
+              try {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  labels: result.labels,
+                });
+                core.info(`Applied labels: ${result.labels.join(', ')}`);
+              } catch (err) {
+                core.warning(`Could not apply labels: ${err.message}`);
+              }
+            }

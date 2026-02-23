@@ -1,0 +1,2 @@
+# Allow test data log files despite the root .gitignore *.log rule
+!*.log
