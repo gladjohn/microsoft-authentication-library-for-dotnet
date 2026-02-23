@@ -1,0 +1,9 @@
+[2023-10-15 15:00:00Z] [Info] [correlationId: xyz789-abc] MSAL .NET 4.57.0 with assembly id MSAL.Desktop
+[2023-10-15 15:00:01Z] [Info] [correlationId: xyz789-abc] ManagedIdentityV2 token acquisition started
+[2023-10-15 15:00:01Z] [Verbose] [correlationId: xyz789-abc] TokenCache lookup for resource https://management.azure.com/
+[2023-10-15 15:00:01Z] [Info] [correlationId: xyz789-abc] CacheMiss: No cached token found for this request
+[2023-10-15 15:00:02Z] [Verbose] [correlationId: xyz789-abc] Acquiring new token from endpoint
+[2023-10-15 15:00:03Z] [Info] [correlationId: xyz789-abc] Token acquired successfully
+[2023-10-15 15:00:03Z] [Info] [correlationId: xyz789-abc] TokenCache: Storing new token, expiry in 3600 seconds
+[2023-10-15 15:00:10Z] [Verbose] [correlationId: xyz789-abc] TokenCache lookup for resource https://management.azure.com/
+[2023-10-15 15:00:10Z] [Info] [correlationId: xyz789-abc] CacheHit: Valid token found in cache, expiry in 3540 seconds

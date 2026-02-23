@@ -1,0 +1,7 @@
+[2023-10-15 17:00:00Z] [Info] [correlationId: pub001-xyz] MSAL .NET 4.57.0 with assembly id MSAL.Desktop
+[2023-10-15 17:00:01Z] [Info] [correlationId: pub001-xyz] Public client token acquisition started
+[2023-10-15 17:00:01Z] [Info] [correlationId: pub001-xyz] Using authorization code flow for user sign-in
+[2023-10-15 17:00:02Z] [Verbose] [correlationId: pub001-xyz] Checking token cache
+[2023-10-15 17:00:02Z] [Info] [correlationId: pub001-xyz] Cache miss, redirecting to login.microsoftonline.com
+[2023-10-15 17:00:05Z] [Info] [correlationId: pub001-xyz] Token acquired successfully for user
+[2023-10-15 17:00:05Z] [Verbose] [correlationId: pub001-xyz] Storing token in cache with expiry 3600 seconds

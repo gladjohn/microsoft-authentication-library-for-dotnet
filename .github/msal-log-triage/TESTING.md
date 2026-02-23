@@ -26,7 +26,7 @@ npm install
 npm test
 ```
 
-All 37 tests should pass.  To view coverage:
+All 51 tests should pass.  To view coverage:
 
 ```bash
 npm run test:coverage
